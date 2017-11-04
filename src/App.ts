@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import MainRouter from './routes/MainRoutes';
+import { MainRouter } from './modules/Main';
 
 class App {
   public express:express.Application;
@@ -20,7 +20,11 @@ class App {
   }
 
   private routes():void {
-    this.express.use('/', MainRouter);
+    var main:MainRouter = new MainRouter();
+    // var app:AppRouter = new AppRouter();
+
+    this.express.use('/', main.router);
+    // this.express.use('/app', app.router);
   }
 }
 
