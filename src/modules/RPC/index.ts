@@ -1,8 +1,6 @@
-export namespace RPC {
-  export interface IEvent {
-    type:string;
-  }
+import IEvent from './IEvent';
 
+namespace RPC {
   export interface ICommand {
     event(event:IEvent):void;
   }
@@ -13,7 +11,7 @@ export namespace RPC {
   }
 
   export interface IService {
-    load(callSignature?:any):Promise<Response>;
+    call(callSignature?:any):Promise<Response>;
   }
 }
 
