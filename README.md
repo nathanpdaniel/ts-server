@@ -6,8 +6,8 @@ This is a simple server to help quickly develop out APIs in TypeScript.
 The architecture follows this pattern:
 ```
 src/
- |-/modules
-  |-/Main
+ -/modules
+  -/Main
     controller.ts
     index.ts
     routes.ts
