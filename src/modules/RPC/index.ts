@@ -1,18 +1,25 @@
-import IEvent from './IEvent';
+import { Request, Response } from 'express'
+import IEvent from './IEvent'
 
 namespace RPC {
   export interface ICommand {
-    event(event:IEvent):void;
+    execute<T>(request?: T): void
   }
 
   export interface IResponder {
-    result(data:any):void;
-    fault(error:any):void;
+    result<T>(data: T): void
+    fault<T>(error: T): void
   }
 
   export interface IService {
-    call(callSignature?:any):Promise<Response>;
+    call(callSignature?: any): void
   }
 }
 
-export default RPC;
+export default RPC
+
+export type RouteHandler = [
+  'get' | 'post' | 'put' | 'patch' | 'delete',
+  string,
+  any
+]
