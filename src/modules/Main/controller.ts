@@ -1,17 +1,23 @@
-import { MainResponse } from './response';
-import { MainService } from './service';
+import { Request, Response } from 'express'
+import RPC from '../RPC'
+import { MainCommand } from './commands/MainCommand'
 
 export class MainController {
-  pending():Promise<Response> {
-    // DB updates
-    // 3rd party API calls
-    // any external modifications...
-    
-    // Services implement RPC.IService interface
-    // RPC.IService has 1 function `load(callSignature)` which returns a Promise<Response>
-    var service:MainService = new MainService();
-    return service.call({});
+  public static handle(request: Request, response: Response) {
+    const handlers: Record<string, any> = {
+      ['GET /']: MainCommand,
+    }
+
+    const { method, path } = request
+
+    try {
+      const key: string = `${method.toUpperCase()} ${path}`
+      const cmd: RPC.ICommand = new handlers[key](response)
+      cmd.execute<Request>(request)
+    } catch (e) {
+      response.sendStatus(500)
+    }
   }
 }
 
-export default MainController;
+export default MainController
